@@ -14,15 +14,16 @@ Template.signin.onCreated(function () {
 Template.signin.onRendered(function () {
 
     var myApiKey = 'AIzaSyA5KSfpBFAbxBzfvMvJ05BJCjflv07i94k'; // Google Api Key
-    Session.set("interval", Number(Template.instance().$('.slider[name=points]')[0].value));
+    Session.set("interval", Template.instance().$('.slider[name=points]')[0].value);
 
-    Tracker.autorun(function () {
+    this.autorun(function () {
         google.charts.load('upcoming', {'packages': ['geochart'], mapsApiKey: myApiKey});
         google.charts.setOnLoadCallback(drawMarkersMap);
 
         function drawMarkersMap() {
-            var moment = Geo.findOne({interval: 0});
-            console.log(Session.get("interval") + " " + moment);
+            var moment = Geo.findOne({interval: Number(Session.get("interval"))});
+            Session.set("name", moment.name);
+
             var data = google.visualization.arrayToDataTable(moment.data);
 
             var options = {
@@ -100,7 +101,11 @@ Template.signin.onRendered(function () {
     // drawChart(chart_div);
 });
 
-Template.signin.helpers({});
+Template.signin.helpers({
+    name(){
+        return Session.get("name");
+    },
+});
 
 Template.signin.events({
     'change .slider[name=points]'(event, template) {
