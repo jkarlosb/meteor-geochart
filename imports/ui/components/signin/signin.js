@@ -6,17 +6,32 @@ import {Meteor} from 'meteor/meteor';
 import './signin.html';
 import {Geo} from '/imports/api/geo/geo.js';
 
-const myApiKey = '<<PUT_HERE_YOUR_API_KEY>>'; // Google Api Key
+const myApiKey = '<<YOUR_API_KEY>>'; // Google Api Key
 
 function drawMarkersMap() {
     Tracker.autorun(function () {
         if (Tracker.currentComputation.firstRun) {
             this.chart = new google.visualization.GeoChart(document.getElementById('chart_div'));
         }
-        var moment = Geo.findOne({interval: Number(Session.get("interval"))});
-        Session.set("name", moment.name);
+        var moments = Geo.find({interval: {$lte: Number(Session.get("interval"))}}).fetch();
+        var lastMoment = moments[moments.length - 1];
+        Session.set("name", lastMoment.name);
 
-        var data = google.visualization.arrayToDataTable(moment.data);
+        var users = 0;
+        var proposals = 0;
+        moments.forEach(function (moment) {
+            let locations = moment.data;
+            for (let i = 1; i < locations.length; i++) {
+                let location = locations[i];
+                users += location[1];
+                proposals += location[2];
+            }
+        });
+
+        Session.set("users", users);
+        Session.set("proposals", proposals);
+
+        var data = google.visualization.arrayToDataTable(lastMoment.data);
 
         var options = {
             sizeAxis: {minValue: 0, maxValue: 50},
@@ -41,7 +56,6 @@ Template.signin.onCreated(function () {
 Template.signin.onRendered(function () {
 
     Session.set("interval", Template.instance().$('.slider[name=points]')[0].value);
-
     google.charts.load('upcoming', {'packages': ['geochart'], mapsApiKey: myApiKey});
     google.charts.setOnLoadCallback(drawMarkersMap);
 
@@ -107,6 +121,12 @@ Template.signin.helpers({
     name(){
         return Session.get("name");
     },
+    users(){
+        return Session.get("users");
+    },
+    proposals(){
+        return Session.get("proposals");
+    }
 });
 
 Template.signin.events({
