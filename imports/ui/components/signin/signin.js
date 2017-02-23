@@ -6,6 +6,33 @@ import {Meteor} from 'meteor/meteor';
 import './signin.html';
 import {Geo} from '/imports/api/geo/geo.js';
 
+const myApiKey = 'AIzaSyA5KSfpBFAbxBzfvMvJ05BJCjflv07i94k'; // Google Api Key
+
+function drawMarkersMap() {
+    Tracker.autorun(function () {
+        if (Tracker.currentComputation.firstRun) {
+            this.chart = new google.visualization.GeoChart(document.getElementById('chart_div'));
+        }
+        var moment = Geo.findOne({interval: Number(Session.get("interval"))});
+        Session.set("name", moment.name);
+
+        var data = google.visualization.arrayToDataTable(moment.data);
+
+        var options = {
+            sizeAxis: {minValue: 0, maxValue: 50},
+            displayMode: 'markers',
+            colorAxis: {colors: ['#23D484', '#23D484']}, // A3 green
+            backgroundColor: {fill: 'transparent'},
+            datalessRegionColor: '#808080', //dell gray color
+            width: "100%",
+            projection: 'kavrayskiy-vii', //less distorted projection of map
+            legend: 'none',
+            tooltip: {isHtml: true, textStyle: {color: '#EEE', fontName: 'Roboto', fontSize: '12'}} // CSS styling affects HTML tooltips
+
+        };
+        this.chart.draw(data, options);
+    });
+};
 
 Template.signin.onCreated(function () {
     Meteor.subscribe("geo.all");
@@ -13,37 +40,10 @@ Template.signin.onCreated(function () {
 
 Template.signin.onRendered(function () {
 
-    var myApiKey = 'AIzaSyA5KSfpBFAbxBzfvMvJ05BJCjflv07i94k'; // Google Api Key
     Session.set("interval", Template.instance().$('.slider[name=points]')[0].value);
-
 
     google.charts.load('upcoming', {'packages': ['geochart'], mapsApiKey: myApiKey});
     google.charts.setOnLoadCallback(drawMarkersMap);
-
-    function drawMarkersMap() {
-        Tracker.autorun(function () {
-            var moment = Geo.findOne({interval: Number(Session.get("interval"))});
-            Session.set("name", moment.name);
-
-            var data = google.visualization.arrayToDataTable(moment.data);
-
-            var options = {
-                sizeAxis: {minValue: 0, maxValue: 50},
-                displayMode: 'markers',
-                colorAxis: {colors: ['#23D484', '#23D484']}, // A3 green
-                backgroundColor: {fill: 'transparent'},
-                datalessRegionColor: '#808080', //dell gray color
-                width: "100%",
-                projection: 'kavrayskiy-vii', //less distorted projection of map
-                legend: 'none',
-                tooltip: {isHtml: true, textStyle: {color: '#EEE', fontName: 'Roboto', fontSize: '12'}} // CSS styling affects HTML tooltips
-
-            };
-
-            var chart = new google.visualization.GeoChart(document.getElementById('chart_div'));
-            chart.draw(data, options);
-        });
-    };
 
 
     // ANOTHER WAY
