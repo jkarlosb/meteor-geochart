@@ -16,11 +16,12 @@ Template.signin.onRendered(function () {
     var myApiKey = 'AIzaSyA5KSfpBFAbxBzfvMvJ05BJCjflv07i94k'; // Google Api Key
     Session.set("interval", Template.instance().$('.slider[name=points]')[0].value);
 
-    this.autorun(function () {
-        google.charts.load('upcoming', {'packages': ['geochart'], mapsApiKey: myApiKey});
-        google.charts.setOnLoadCallback(drawMarkersMap);
 
-        function drawMarkersMap() {
+    google.charts.load('upcoming', {'packages': ['geochart'], mapsApiKey: myApiKey});
+    google.charts.setOnLoadCallback(drawMarkersMap);
+
+    function drawMarkersMap() {
+        Tracker.autorun(function () {
             var moment = Geo.findOne({interval: Number(Session.get("interval"))});
             Session.set("name", moment.name);
 
@@ -41,8 +42,9 @@ Template.signin.onRendered(function () {
 
             var chart = new google.visualization.GeoChart(document.getElementById('chart_div'));
             chart.draw(data, options);
-        };
-    });
+        });
+    };
+
 
     // ANOTHER WAY
     // WITH: meteor add rafaelhdr:google-charts
