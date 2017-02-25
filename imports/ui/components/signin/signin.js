@@ -6,7 +6,9 @@ import {Meteor} from 'meteor/meteor';
 import './signin.html';
 import {Geo} from '/imports/api/geo/geo.js';
 
-const myApiKey = 'AIzaSyA5KSfpBFAbxBzfvMvJ05BJCjflv07i94k'; // Google Api Key
+
+const myApiKey = "PUT_HERE_YOUR_API_KEY"; // Google Api Key
+console.log(myApiKey);
 
 function drawMarkersMap() {
     Tracker.autorun(function () {
@@ -51,6 +53,19 @@ function drawMarkersMap() {
 
 Template.signin.onCreated(function () {
     Meteor.subscribe("geo.all");
+
+    // Resize map on window resize event
+    // create trigger to resizeEnd event
+    $(window).resize(function () {
+        if(this.resizeTO) clearTimeout(this.resizeTO);
+        this.resizeTO = setTimeout(function () {
+            $(this).trigger('resizeEnd');
+        }, 500);
+    });
+    // redraw map when window resize is complete or after 500ms
+    $(window).on('resizeEnd', function () {
+        drawMarkersMap();
+    });
 });
 
 Template.signin.onRendered(function () {
@@ -59,62 +74,6 @@ Template.signin.onRendered(function () {
     google.charts.load('upcoming', {'packages': ['geochart'], mapsApiKey: myApiKey});
     google.charts.setOnLoadCallback(drawMarkersMap);
 
-
-    // ANOTHER WAY
-    // WITH: meteor add rafaelhdr:google-charts
-    // var chart = {
-    //     target: 'chart2',
-    //     type: 'GeoChart',
-    //     data: [
-    //         ['Location', 'Total Proposals', 'Unique Logins'],
-    //         ['Austin, Texas', 1270, 60],
-    //         ['Memphis, Tennessee', 9070, 30],
-    //         ['Denver, Colorado', 8270, 10],
-    //         ['Berlin, Germany', 6670, 20],
-    //         ['Frankfurt, Germany', 65, 5],
-    //         ['Nice, France', 907, 10],
-    //         ['Lilly, France', 90, 5],
-    //         ['Busan, Korea', 990, 5],
-    //         ['Suwon, Korea', 1600, 15],
-    //         ['Sopot, Poland', 567, 10],
-    //         ['Lublin, Poland', 945, 15],
-    //         ['Moscow, Russia', 653, 5],
-    //         ['Saint, Russia', 876, 5],
-    //         ['Visby, Sweden', 123, 10],
-    //         ['Lund, Sweden', 945, 15],
-    //         ['Tokyo, Japan', 4567, 10],
-    //         ['Osaka, Japan', 2400, 10],
-    //         ['Guilin, China', 5421, 5],
-    //         ['Beijing, China', 1000, 10]
-    //     ],
-    //     options: {
-    //         sizeAxis: {
-    //             minValue: 0,
-    //             maxValue: 50
-    //         },
-    //         displayMode: 'markers',
-    //         colorAxis: {
-    //             colors: ['#23D484', '#23D484']
-    //         }, // A3 green
-    //         backgroundColor: {
-    //             fill: 'transparent'
-    //         },
-    //         datalessRegionColor: '#808080', //dell gray color
-    //         width: "100%",
-    //         projection: 'kavrayskiy-vii', //less distorted projection of map
-    //         legend: 'none',
-    //         tooltip: {
-    //             isHtml: true,
-    //             textStyle: {
-    //                 color: '#EEE',
-    //                 fontName: 'Roboto',
-    //                 fontSize: '12'
-    //             }
-    //         } // CSS styling affects HTML tooltips
-    //     }
-    // };
-    //
-    // drawChart(chart_div);
 });
 
 Template.signin.helpers({
