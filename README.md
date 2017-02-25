@@ -12,3 +12,8 @@ You can put it in imports/ui/components/geochart/geochart.js file, inside myApiK
   ```
   const myApiKey = "AIzsSyD4cYuf8s9GzKw34erDY8in8xwTtE"; // Google Api Key
   ```
+
+###Get started
+    meteor npm install
+    meteor
+    Go to http://localhost:3000
