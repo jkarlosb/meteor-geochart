@@ -8,7 +8,7 @@ Geochart changes reactively when slider changes. Data from MongoDB. Implemented 
 
 ###Google Api Key
 Api key from Google is required (https://developers.google.com/maps/documentation/javascript/get-api-key). 
-You can put it in singin.js file, inside myApiKey var, e.g.:
+You can put it in imports/ui/components/geochart/geochart.js file, inside myApiKey var, e.g.:
   ```
   const myApiKey = "AIzsSyD4cYuf8s9GzKw34erDY8in8xwTtE"; // Google Api Key
   ```
