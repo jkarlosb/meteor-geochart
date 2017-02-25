@@ -1,6 +1,6 @@
 # meteor-geochart
 ###Geochart implementation in Meteor
-Geochart map changes reactively when slider changes. Data from MongoDB. Implemented with official Google Charts Api.
+Geochart map updates reactively when slider changes. Data from MongoDB. Implemented with official Google Charts Api.
 
 ###Images:
   !["image geochart demo" geochart](https://github.com/jkarlosb/meteor-geochart/blob/master/public/img/demo1.png)
