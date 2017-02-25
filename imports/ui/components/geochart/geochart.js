@@ -3,7 +3,7 @@
  */
 
 import {Meteor} from 'meteor/meteor';
-import './signin.html';
+import './geochart.html';
 import {Geo} from '/imports/api/geo/geo.js';
 
 
@@ -51,7 +51,7 @@ function drawMarkersMap() {
     });
 };
 
-Template.signin.onCreated(function () {
+Template.geochart.onCreated(function () {
     Meteor.subscribe("geo.all");
 
     // Resize map on window resize event
@@ -68,7 +68,7 @@ Template.signin.onCreated(function () {
     });
 });
 
-Template.signin.onRendered(function () {
+Template.geochart.onRendered(function () {
 
     Session.set("interval", Template.instance().$('.slider[name=points]')[0].value);
     google.charts.load('upcoming', {'packages': ['geochart'], mapsApiKey: myApiKey});
@@ -76,7 +76,7 @@ Template.signin.onRendered(function () {
 
 });
 
-Template.signin.helpers({
+Template.geochart.helpers({
     name(){
         return Session.get("name");
     },
@@ -88,7 +88,7 @@ Template.signin.helpers({
     }
 });
 
-Template.signin.events({
+Template.geochart.events({
     'change .slider[name=points]'(event, template) {
         Session.set("interval", event.target.value);
     }

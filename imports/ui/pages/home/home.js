@@ -1,4 +1,4 @@
 import './home.html';
 
-import '../../components/signin/signin.js';
+import '../../components/geochart/geochart.js';
 
