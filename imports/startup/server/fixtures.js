@@ -90,7 +90,7 @@ Meteor.startup(() => {
             },
             {
                 interval: 3,
-                name: 'Last two months',
+                name: 'Last 2 months',
                 data: [
                     ['Location', 'Total Proposals', 'Unique Logins'],
                     ['Austin, Texas', 1270, 60],
@@ -117,7 +117,7 @@ Meteor.startup(() => {
             },
             {
                 interval: 4,
-                name: 'moment',
+                name: 'Last quarter',
                 data: [
                     ['Location', 'Total Proposals', 'Unique Logins'],
                     ['Austin, Texas', 1270, 60],
@@ -144,7 +144,7 @@ Meteor.startup(() => {
             },
             {
                 interval: 5,
-                name: 'moment',
+                name: 'Last 2 quarters',
                 data: [
                     ['Location', 'Total Proposals', 'Unique Logins'],
                     ['Austin, Texas', 1270, 60],
@@ -171,7 +171,7 @@ Meteor.startup(() => {
             },
             {
                 interval: 6,
-                name: 'moment',
+                name: 'Last 3 quarters',
                 data: [
                     ['Location', 'Total Proposals', 'Unique Logins'],
                     ['Austin, Texas', 1270, 60],
@@ -198,7 +198,7 @@ Meteor.startup(() => {
             },
             {
                 interval: 7,
-                name: 'moment',
+                name: 'Last year',
                 data: [
                     ['Location', 'Total Proposals', 'Unique Logins'],
                     ['Austin, Texas', 1270, 60],
@@ -225,7 +225,7 @@ Meteor.startup(() => {
             },
             {
                 interval: 8,
-                name: 'moment',
+                name: 'Last 2 years',
                 data: [
                     ['Location', 'Total Proposals', 'Unique Logins'],
                     ['Austin, Texas', 1270, 60],
@@ -252,34 +252,7 @@ Meteor.startup(() => {
             },
             {
                 interval: 9,
-                name: 'Last 6 months',
-                data: [
-                    ['Location', 'Total Proposals', 'Unique Logins'],
-                    ['Austin, Texas', 11270, 160],
-                    ['Memphis, Tennessee', 19070, 130],
-                    ['Denver, Colorado', 18270, 110],
-                    ['Berlin, Germany', 16670, 120],
-                    ['Frankfurt, Germany', 165, 15],
-                    ['Nice, France', 1907, 110],
-                    ['Lilly, France', 190, 15],
-                    ['Busan, Korea', 1990, 15],
-                    ['Suwon, Korea', 11600, 115],
-                    ['Sopot, Poland', 1567, 110],
-                    ['Lublin, Poland', 1945, 115],
-                    ['Moscow, Russia', 1653, 15],
-                    ['Saint, Russia', 1876, 15],
-                    ['Visby, Sweden', 1123, 110],
-                    ['Lund, Sweden', 1945, 115],
-                    ['Tokyo, Japan', 14567, 110],
-                    ['Osaka, Japan', 12400, 110],
-                    ['Guilin, China', 15421, 15],
-                    ['Beijing, China', 11000, 110]
-
-                ],
-            },
-            {
-                interval: 10,
-                name: 'Last year',
+                name: 'All of time',
                 data: [
                     ['Location', 'Total Proposals', 'Unique Logins'],
                     ['Austin, Texas', 11270, 160],

@@ -6,7 +6,7 @@ import {Meteor} from 'meteor/meteor';
 import './signin.html';
 import {Geo} from '/imports/api/geo/geo.js';
 
-const myApiKey = '<<YOUR_API_KEY>>'; // Google Api Key
+const myApiKey = 'AIzaSyA5KSfpBFAbxBzfvMvJ05BJCjflv07i94k'; // Google Api Key
 
 function drawMarkersMap() {
     Tracker.autorun(function () {
